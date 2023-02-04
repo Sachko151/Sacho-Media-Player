@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.38.2 -->
+<interface>
+  <requires lib="gtk+" version="3.24"/>
+  <object class="GtkWindow" id="window">
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes">Basic Media Player</property>
+    <property name="resizable">False</property>
+    <property name="default-width">550</property>
+    <property name="default-height">500</property>
+    <child>
+      <object class="GtkFixed" id="fixed">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <object class="GtkLabel" id="label">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Media Player</property>
+          </object>
+          <packing>
+            <property name="x">274</property>
+            <property name="y">37</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lblMediaName">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Media name:</property>
+          </object>
+          <packing>
+            <property name="x">51</property>
+            <property name="y">163</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnStop">
+            <property name="label" translatable="yes">stop</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_btnStop_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">65</property>
+            <property name="y">349</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnPause">
+            <property name="label" translatable="yes">pause
+</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_btnPause_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">203</property>
+            <property name="y">349</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnPlay">
+            <property name="label" translatable="yes">play
+</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_btnPlay_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">354</property>
+            <property name="y">349</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lblProgress">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">0:00-11:59
+</property>
+          </object>
+          <packing>
+            <property name="x">55</property>
+            <property name="y">262</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnLoad">
+            <property name="label" translatable="yes">Load</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_btnLoad_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">459</property>
+            <property name="y">182</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
