@@ -94,19 +94,6 @@
           </packing>
         </child>
         <child>
-          <object class="GtkButton" id="btnLoad">
-            <property name="label" translatable="yes">Load</property>
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <signal name="clicked" handler="on_btnLoad_clicked" swapped="no"/>
-          </object>
-          <packing>
-            <property name="x">459</property>
-            <property name="y">182</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkFileChooserButton" id="btnFileChooser">
             <property name="width-request">100</property>
             <property name="height-request">80</property>
@@ -117,8 +104,8 @@
             <signal name="selection-changed" handler="on_btnFileChooser_selection_changed" swapped="no"/>
           </object>
           <packing>
-            <property name="x">488</property>
-            <property name="y">256</property>
+            <property name="x">376</property>
+            <property name="y">170</property>
           </packing>
         </child>
       </object>
