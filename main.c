@@ -22,8 +22,7 @@ libvlc_media_player_t *mp;
 libvlc_media_t *file;
 void init_the_gui(int argc, char **argv);
 void init_the_media_player(libvlc_media_t *file);
-void put_the_length_into_the_label(libvlc_media_player_t *mp);
-static gboolean print_progress(GtkWidget *progress);
+static gboolean set_progress_to_label(GtkWidget *progress);
 int main(int argc, char **argv){
     init_the_gui(argc, argv);
     return 0;
@@ -44,7 +43,6 @@ void init_the_gui(int argc, char **argv){
     btnLoad = GTK_WIDGET(gtk_builder_get_object(builder, "btnPLoad"));
     btnFileChooser = gtk_file_chooser_button_new(("Select a file"),
                                         GTK_FILE_CHOOSER_ACTION_OPEN);
-    g_timeout_add(250, G_SOURCE_FUNC(print_progress), GTK_LABEL(lblProgress));
     lblProgress = GTK_WIDGET(gtk_builder_get_object(builder, "lblProgress"));
     lblLength = GTK_WIDGET(gtk_builder_get_object(builder, "lblLength"));
     gtk_widget_show(window);
@@ -64,8 +62,7 @@ void on_btnPlay_clicked(GtkButton *button){
         return;
     }
     libvlc_media_player_play(mp);
-    sleep(1);//quickfix for it not updating fast enough it sets the label to 0 maybe because the mp is not yet started 
-    put_the_length_into_the_label(mp);
+    g_timeout_add(1000, G_SOURCE_FUNC(set_progress_to_label), GTK_LABEL(lblProgress));
 }
 void on_btnPause_clicked(GtkButton *button){
     if(mp == NULL){
@@ -90,23 +87,23 @@ void on_btnFileChooser_file_set(GtkFileChooserButton *button, gpointer user_data
 void on_btnFileChooser_selection_changed(GtkFileChooserButton *button){
     printf("%s", "selection_changed\n");
 }
-static gboolean print_progress(GtkWidget *progress){
-    int64_t time_in_seconds;
+static gboolean set_progress_to_label(GtkWidget *progress){
+    int64_t time_in_seconds, time_in_minutes,length_in_seconds, length_in_minutes;
     if(mp != NULL){
          time_in_seconds = (int64_t)libvlc_media_player_get_time(mp) / 1000;
+         time_in_minutes = time_in_seconds / 60;
+         length_in_seconds =  libvlc_media_player_get_length(mp) / 1000;
+         length_in_minutes = length_in_seconds / 60;
     }
-    time_in_seconds = 0;
+    else {
+        time_in_seconds = 0;
+        time_in_minutes = 0;
+        length_in_seconds = 0;
+        length_in_minutes = 0;
+    }
     char *text;
-    text = g_strdup_printf("%ld", time_in_seconds);
+    text = g_strdup_printf("%ld:%ld/%ld:%ld", time_in_minutes,time_in_seconds, length_in_minutes, (length_in_seconds-length_in_minutes*60));
     gtk_label_set_label ( GTK_LABEL ( lblProgress ), text );
     g_free(text);
     return TRUE;
-}
-void put_the_length_into_the_label(libvlc_media_player_t *mp){
-    int64_t length_in_seconds =  libvlc_media_player_get_length(mp) / 1000;
-    int64_t length_in_minutes = length_in_seconds / 60;
-    char *text;
-    text = g_strdup_printf ("%ld:%ld", length_in_minutes, length_in_seconds-(length_in_minutes*60));
-    gtk_label_set_label(GTK_LABEL(lblLength), text);
-    g_free(text);
 }
