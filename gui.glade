@@ -81,11 +81,9 @@
         </child>
         <child>
           <object class="GtkLabel" id="lblProgress">
-            <property name="width-request">100</property>
-            <property name="height-request">80</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">0:00-11:59
+            <property name="label" translatable="yes">123:333
 </property>
           </object>
           <packing>
@@ -106,6 +104,18 @@
           <packing>
             <property name="x">376</property>
             <property name="y">170</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="lblLength">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">123:333
+</property>
+          </object>
+          <packing>
+            <property name="x">126</property>
+            <property name="y">262</property>
           </packing>
         </child>
       </object>
