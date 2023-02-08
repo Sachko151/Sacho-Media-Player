@@ -16,6 +16,8 @@ GtkWidget *btnLoad;
 GtkWidget *btnFileChooser;
 GtkWidget *lblProgress;
 GtkWidget *lblLength;
+GtkWidget *btnForward;
+GtkWidget *btnBackward;
 GtkBuilder *builder;
 libvlc_instance_t *inst;
 libvlc_media_player_t *mp;
@@ -43,6 +45,8 @@ void init_the_gui(int argc, char **argv){
     btnLoad = GTK_WIDGET(gtk_builder_get_object(builder, "btnPLoad"));
     btnFileChooser = gtk_file_chooser_button_new(("Select a file"),
                                         GTK_FILE_CHOOSER_ACTION_OPEN);
+    btnForward = GTK_WIDGET(gtk_builder_get_object(builder, "btnForward"));
+    btnBackward = GTK_WIDGET(gtk_builder_get_object(builder, "btnBackward"));
     lblProgress = GTK_WIDGET(gtk_builder_get_object(builder, "lblProgress"));
     lblLength = GTK_WIDGET(gtk_builder_get_object(builder, "lblLength"));
     gtk_widget_show(window);
@@ -61,18 +65,31 @@ void on_btnPlay_clicked(GtkButton *button){
     if(mp == NULL){
         return;
     }
+    else{
+        gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
+        gtk_widget_set_sensitive(GTK_WIDGET(btnPause), TRUE);
+    }
     libvlc_media_player_play(mp);
+    
     g_timeout_add(1000, G_SOURCE_FUNC(set_progress_to_label), GTK_LABEL(lblProgress));
 }
 void on_btnPause_clicked(GtkButton *button){
     if(mp == NULL){
         return;
     }
+    else{
+        gtk_widget_set_sensitive (GTK_WIDGET(btnPlay), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+    }
     libvlc_media_player_pause(mp);
 }
 void on_btnStop_clicked(GtkButton *button){
     if(mp == NULL){
         return;
+    }
+    else{
+        gtk_widget_set_sensitive (GTK_WIDGET(btnPlay), TRUE);
+        gtk_widget_set_sensitive(GTK_WIDGET(btnPause), TRUE);
     }
     libvlc_media_player_stop(mp);
 }
@@ -85,7 +102,7 @@ void on_btnFileChooser_file_set(GtkFileChooserButton *button, gpointer user_data
     printf("%s", "set_file\n");
 }
 void on_btnFileChooser_selection_changed(GtkFileChooserButton *button){
-    printf("%s", "selection_changed\n");
+    printf("%s", "selection_changed\n"); // currently does nothing!
 }
 static gboolean set_progress_to_label(GtkWidget *progress){
     int64_t time_in_seconds, time_in_minutes,length_in_seconds, length_in_minutes;
@@ -102,8 +119,33 @@ static gboolean set_progress_to_label(GtkWidget *progress){
         length_in_minutes = 0;
     }
     char *text;
-    text = g_strdup_printf("%ld:%ld/%ld:%ld", time_in_minutes,time_in_seconds, length_in_minutes, (length_in_seconds-length_in_minutes*60));
+    text = g_strdup_printf("%ld:%ld/%ld:%ld", time_in_minutes,(time_in_seconds-time_in_minutes*60), length_in_minutes, (length_in_seconds-length_in_minutes*60));
     gtk_label_set_label ( GTK_LABEL ( lblProgress ), text );
     g_free(text);
     return TRUE;
+}
+void on_btnBackward_clicked(GtkButton *button){
+    
+    int offset = 5;
+    if(mp != NULL){
+        int64_t current_time = libvlc_media_player_get_time(mp);
+        if(current_time <= offset*1e3){
+            return;
+        }
+        libvlc_media_player_set_time(mp, current_time-offset*1e3);
+        set_progress_to_label(lblProgress);
+    }
+    
+}
+void on_btnForward_clicked(GtkButton *button){
+    int offset = 5;
+    if(mp != NULL){
+        int64_t current_time = libvlc_media_player_get_time(mp);
+        if(current_time >= libvlc_media_player_get_length(mp)){
+            return;
+        }
+        libvlc_media_player_set_time(mp, current_time+offset*1e3);
+        set_progress_to_label(lblProgress);
+    }
+    
 }
