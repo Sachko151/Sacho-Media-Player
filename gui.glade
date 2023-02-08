@@ -83,8 +83,7 @@
           <object class="GtkLabel" id="lblProgress">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="label" translatable="yes">123:333
-</property>
+            <property name="label" translatable="yes">No media loaded</property>
           </object>
           <packing>
             <property name="x">55</property>
@@ -104,6 +103,32 @@
           <packing>
             <property name="x">376</property>
             <property name="y">170</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnForward">
+            <property name="label" translatable="yes">-&gt;</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_btnForward_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">251</property>
+            <property name="y">287</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btnBackward">
+            <property name="label" translatable="yes">&lt;-</property>
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <signal name="clicked" handler="on_btnBackward_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">164</property>
+            <property name="y">287</property>
           </packing>
         </child>
       </object>
