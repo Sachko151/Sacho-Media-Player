@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <vlc/vlc.h>
 #include <stddef.h>
+#include <string.h>
 //Declare the global variables
 GtkWidget *window;
 GtkWidget *fixed;
@@ -25,6 +26,7 @@ libvlc_media_t *file;
 void init_the_gui(int argc, char **argv);
 void init_the_media_player(libvlc_media_t *file);
 static gboolean set_progress_to_label(GtkWidget *progress);
+void set_filename_to_media(gchar *filename);
 int main(int argc, char **argv){
     init_the_gui(argc, argv);
     return 0;
@@ -97,9 +99,10 @@ void on_btnFileChooser_file_set(GtkFileChooserButton *button, gpointer user_data
     if(file != NULL){
         libvlc_media_player_stop(mp);
     }
-    file = libvlc_media_new_path(inst, gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(button)));
+    gchar *filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(button));
+    file = libvlc_media_new_path(inst, filename);
     init_the_media_player(file);
-    printf("%s", "set_file\n");
+    set_filename_to_media(filename);
 }
 void on_btnFileChooser_selection_changed(GtkFileChooserButton *button){
     printf("%s", "selection_changed\n"); // currently does nothing!
@@ -130,12 +133,12 @@ void on_btnBackward_clicked(GtkButton *button){
     if(mp != NULL){
         int64_t current_time = libvlc_media_player_get_time(mp);
         if(current_time <= offset*1e3){
+            current_time = 0;
             return;
         }
         libvlc_media_player_set_time(mp, current_time-offset*1e3);
         set_progress_to_label(lblProgress);
-    }
-    
+    } 
 }
 void on_btnForward_clicked(GtkButton *button){
     int offset = 5;
@@ -148,4 +151,23 @@ void on_btnForward_clicked(GtkButton *button){
         set_progress_to_label(lblProgress);
     }
     
+}
+void set_filename_to_media(gchar *filename){
+    if(mp == NULL){
+        return;
+    }
+    int start_index = 0;
+    for(int i = 0; i < strlen(filename); i++){
+        if(filename[i]=='/'){
+            start_index = i;
+        }
+    }
+    char name[strlen(filename) - start_index];
+    char *ptr = name;
+    for(int i = start_index+1; i < strlen(filename); i++){
+        *ptr = filename[i];
+        ptr++;
+    }
+    *ptr = '\0';
+    gtk_label_set_text(GTK_LABEL(lbl_media_name), name);
 }
