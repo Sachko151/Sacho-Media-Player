@@ -71,7 +71,8 @@ void on_btnPlay_clicked(GtkButton *button){
         gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
         gtk_widget_set_sensitive(GTK_WIDGET(btnPause), TRUE);
     }
-    libvlc_media_player_play(mp);
+    int status = libvlc_media_player_play(mp);
+    printf("%d", status);
     
     g_timeout_add(1000, G_SOURCE_FUNC(set_progress_to_label), GTK_LABEL(lblProgress));
 }
