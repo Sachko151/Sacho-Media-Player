@@ -55,7 +55,6 @@ void init_the_gui(int argc, char **argv){
 void init_the_media_player(libvlc_media_t *file){
     inst = libvlc_new(0, NULL);
     if(file == NULL){
-        printf("%s", "File is empty!");
         return;
     }
     mp = libvlc_media_player_new_from_media(file);
@@ -99,10 +98,6 @@ void on_btnFileChooser_file_set(GtkFileChooserButton *button, gpointer user_data
     }
     file = libvlc_media_new_path(inst, gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(button)));
     init_the_media_player(file);
-    printf("%s", "set_file\n");
-}
-void on_btnFileChooser_selection_changed(GtkFileChooserButton *button){
-    printf("%s", "selection_changed\n"); // currently does nothing!
 }
 static gboolean set_progress_to_label(GtkWidget *progress){
     int64_t time_in_seconds, time_in_minutes,length_in_seconds, length_in_minutes;
@@ -130,6 +125,8 @@ void on_btnBackward_clicked(GtkButton *button){
     if(mp != NULL){
         int64_t current_time = libvlc_media_player_get_time(mp);
         if(current_time <= offset*1e3){
+            current_time = 0;
+            libvlc_media_player_set_time(mp, 0);
             return;
         }
         libvlc_media_player_set_time(mp, current_time-offset*1e3);

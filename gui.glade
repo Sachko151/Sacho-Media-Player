@@ -2,6 +2,15 @@
 <!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.24"/>
+  <object class="GtkFileFilter" id="filefilter1">
+    <mime-types>
+      <mime-type>music/ *</mime-type>
+    </mime-types>
+    <patterns>
+      <pattern>*.mp3</pattern>
+      <pattern>*.mp4</pattern>
+    </patterns>
+  </object>
   <object class="GtkWindow" id="window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Basic Media Player</property>
@@ -19,9 +28,15 @@
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="label" translatable="yes">Media Player</property>
+            <attributes>
+              <attribute name="style" value="oblique"/>
+              <attribute name="weight" value="bold"/>
+              <attribute name="foreground" value="#e0e01b1b2424"/>
+              <attribute name="size" value="25648"/>
+            </attributes>
           </object>
           <packing>
-            <property name="x">274</property>
+            <property name="x">145</property>
             <property name="y">37</property>
           </packing>
         </child>
@@ -40,24 +55,27 @@
         </child>
         <child>
           <object class="GtkButton" id="btnStop">
-            <property name="label" translatable="yes">stop</property>
+            <property name="label">gtk-media-stop</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="use-stock">True</property>
+            <property name="always-show-image">True</property>
             <signal name="clicked" handler="on_btnStop_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="x">65</property>
+            <property name="x">354</property>
             <property name="y">349</property>
           </packing>
         </child>
         <child>
           <object class="GtkButton" id="btnPause">
-            <property name="label" translatable="yes">pause
-</property>
+            <property name="label">gtk-media-pause</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="use-stock">True</property>
+            <property name="always-show-image">True</property>
             <signal name="clicked" handler="on_btnPause_clicked" swapped="no"/>
           </object>
           <packing>
@@ -67,15 +85,16 @@
         </child>
         <child>
           <object class="GtkButton" id="btnPlay">
-            <property name="label" translatable="yes">play
-</property>
+            <property name="label">gtk-media-play</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="use-stock">True</property>
+            <property name="always-show-image">True</property>
             <signal name="clicked" handler="on_btnPlay_clicked" swapped="no"/>
           </object>
           <packing>
-            <property name="x">354</property>
+            <property name="x">65</property>
             <property name="y">349</property>
           </packing>
         </child>
@@ -98,7 +117,6 @@
             <property name="can-focus">False</property>
             <property name="title" translatable="yes">Choose</property>
             <signal name="file-set" handler="on_btnFileChooser_file_set" swapped="no"/>
-            <signal name="selection-changed" handler="on_btnFileChooser_selection_changed" swapped="no"/>
           </object>
           <packing>
             <property name="x">376</property>
@@ -107,10 +125,12 @@
         </child>
         <child>
           <object class="GtkButton" id="btnForward">
-            <property name="label" translatable="yes">-&gt;</property>
+            <property name="label">gtk-media-forward</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="use-stock">True</property>
+            <property name="always-show-image">True</property>
             <signal name="clicked" handler="on_btnForward_clicked" swapped="no"/>
           </object>
           <packing>
@@ -120,10 +140,12 @@
         </child>
         <child>
           <object class="GtkButton" id="btnBackward">
-            <property name="label" translatable="yes">&lt;-</property>
+            <property name="label">gtk-media-rewind</property>
             <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
+            <property name="use-stock">True</property>
+            <property name="always-show-image">True</property>
             <signal name="clicked" handler="on_btnBackward_clicked" swapped="no"/>
           </object>
           <packing>
